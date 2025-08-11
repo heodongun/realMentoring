@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>연락처 상세</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <style>
+    .container { max-width: 600px; margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <% if (emailSent) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        이메일이 성공적으로 발송되었습니다!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% } %>
+    
+    <h1 class="mb-4">연락처 상세</h1>
+    
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title"><%= contact.name %></h2>
+        <p class="card-text">
+          <strong>이메일:</strong> <%= contact.email %><br>
+          <strong>전화번호:</strong> <%= contact.phone || '없음' %><br>
+          <strong>그룹:</strong> <%= contact.group || '미지정' %><br>
+          <strong>등록일:</strong> <%= contact.createdAt.toLocaleDateString() %>
+        </p>
+        
+        <div class="d-flex mt-3">
+          <a href="/send-email/<%= contact._id %>" class="btn btn-success me-2">이메일 보내기</a>
+          <a href="/edit-contact/<%= contact._id %>" class="btn btn-warning me-2">수정</a>
+          <form action="/delete-contact/<%= contact._id %>" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+            <button type="submit" class="btn btn-danger me-2">삭제</button>
+          </form>
+          <a href="/" class="btn btn-secondary">목록으로</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

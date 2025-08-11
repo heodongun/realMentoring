@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= post.title %></title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    h1 { color: #333; }
+    .post-info { color: #666; margin-bottom: 20px; }
+    .post-content { line-height: 1.6; margin-bottom: 30px; }
+    .btn { display: inline-block; padding: 8px 16px; background-color: #4CAF50; color: white; 
+          text-decoration: none; border-radius: 4px; margin-right: 10px; }
+    .btn.delete { background-color: #f44336; }
+    .btn.edit { background-color: #2196F3; }
+    .btn.list { background-color: #607d8b; }
+  </style>
+</head>
+<body>
+  <h1><%= post.title %></h1>
+  <div class="post-info">
+    작성일: <%= post.date.toLocaleString() %>
+  </div>
+  
+  <div class="post-content">
+    <%= post.content %>
+  </div>
+  
+  <div class="actions">
+    <a href="/edit/<%= post._id %>" class="btn edit">수정</a>
+    
+    <form action="/delete/<%= post._id %>" method="POST" style="display: inline;">
+      <button type="submit" class="btn delete" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+    </form>
+    
+    <a href="/" class="btn list">목록으로</a>
+  </div>
+</body>
+</html>
