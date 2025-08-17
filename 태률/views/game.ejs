@@ -1,0 +1,53 @@
+<div class="game-container">
+    <div class="game-header">
+        <div class="game-info-header">
+            <h2>게임 ID: <span id="game-id"><%= gameId %></span></h2>
+            <p>친구들에게 이 코드를 공유하여 함께 플레이하세요!</p>
+        </div>
+        <div class="game-info">
+            <div class="player-list">
+                <h3>플레이어 목록</h3>
+                <ul id="players"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="canvas-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+    
+    <div class="game-controls">
+        <button id="start-btn" class="btn btn-primary">게임 시작</button>
+        <button id="leave-btn" class="btn btn-danger">게임 나가기</button>
+    </div>
+    
+    <div id="game-message" class="game-message"></div>
+    
+    <div class="game-instructions">
+        <h3>조작 방법</h3>
+        <p>방향키(↑, ↓, ←, →) 또는 WASD 키로 지렁이를 조작합니다</p>
+        <p>스페이스바를 눌러 게임을 시작할 수도 있습니다</p>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/game.js"></script>
+
+<script>
+    // URL에서 플레이어 이름 추출
+    const urlParams = new URLSearchParams(window.location.search);
+    const playerName = urlParams.get('name') || 'Guest_' + Math.floor(Math.random() * 1000);
+    const gameId = '<%= gameId %>';
+    
+    // 콘솔에 초기 정보 출력
+    console.log('게임 페이지 로드:', {
+        gameId: gameId,
+        playerName: playerName
+    });
+    
+    // 게임 초기화
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM 로드 완료, 게임 초기화 시작');
+        initGame(gameId, playerName);
+    });
+</script>

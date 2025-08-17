@@ -1,0 +1,111 @@
+<div class="welcome-container">
+    <h2>실시간 멀티플레이어 지렁이 게임</h2>
+    <div class="game-options">
+        <div class="option-card">
+            <h3>새 게임 만들기</h3>
+            <form id="create-game-form">
+                <div class="form-group">
+                    <label for="create-name">닉네임</label>
+                    <input type="text" id="create-name" required placeholder="닉네임을 입력하세요">
+                </div>
+                <button type="submit" class="btn btn-primary">게임 만들기</button>
+            </form>
+        </div>
+
+        <div class="option-card">
+            <h3>게임 참가하기</h3>
+            <form id="join-game-form">
+                <div class="form-group">
+                    <label for="join-name">닉네임</label>
+                    <input type="text" id="join-name" required placeholder="닉네임을 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label for="game-id">게임 코드</label>
+                    <input type="text" id="game-id" required placeholder="게임 코드를 입력하세요">
+                </div>
+                <button type="submit" class="btn btn-secondary">게임 참가하기</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="instructions">
+        <h3>게임 방법</h3>
+        <ul>
+            <li>방향키(↑, ↓, ←, →) 또는 WASD 키를 사용하여 지렁이를 조작합니다.</li>
+            <li>음식(빨간색 원)을 먹으면 지렁이의 길이가 늘어납니다.</li>
+            <li>벽이나 다른 지렁이에 부딪히면 게임이 끝납니다.</li>
+            <li>마지막까지 살아남는 플레이어가 승리합니다.</li>
+        </ul>
+    </div>
+    
+    <div id="status-message" class="status-message"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            const socket = io();
+            
+            // 상태 메시지 표시 함수
+            function showStatusMessage(message, type = 'info') {
+                const statusMsg = document.getElementById('status-message');
+                statusMsg.textContent = message;
+                statusMsg.className = 'status-message ' + type;
+                setTimeout(() => {
+                    statusMsg.textContent = '';
+                }, 3000);
+            }
+            
+            // 게임 생성 폼 제출 처리
+            document.getElementById('create-game-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const playerName = document.getElementById('create-name').value.trim();
+                
+                if (playerName) {
+                    showStatusMessage('게임 생성 중...', 'info');
+                    socket.emit('createGame', playerName);
+                }
+            });
+            
+            // 게임 참가 폼 제출 처리
+            document.getElementById('join-game-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const playerName = document.getElementById('join-name').value.trim();
+                const gameId = document.getElementById('game-id').value.trim();
+                
+                if (playerName && gameId) {
+                    window.location.href = `/game/${gameId}?name=${encodeURIComponent(playerName)}`;
+                }
+            });
+            
+            // 게임 생성 이벤트 처리
+            socket.on('gameCreated', (gameId) => {
+                const playerName = document.getElementById('create-name').value.trim();
+                showStatusMessage('게임이 생성되었습니다! 이동 중...', 'success');
+                setTimeout(() => {
+                    window.location.href = `/game/${gameId}?name=${encodeURIComponent(playerName)}`;
+                }, 1000);
+            });
+            
+            // 연결 이벤트
+            socket.on('connect', () => {
+                console.log('서버에 연결되었습니다!');
+            });
+            
+            // 연결 오류 이벤트
+            socket.on('connect_error', (error) => {
+                console.error('연결 오류:', error);
+                showStatusMessage('서버 연결 오류. 페이지를 새로고침 해주세요.', 'error');
+            });
+            
+            // 에러 처리
+            socket.on('error', (message) => {
+                showStatusMessage('오류: ' + message, 'error');
+            });
+        } catch (error) {
+            console.error('초기화 오류:', error);
+            document.getElementById('status-message').textContent = '서버 연결 오류. 페이지를 새로고침 해주세요.';
+            document.getElementById('status-message').className = 'status-message error';
+        }
+    });
+</script>

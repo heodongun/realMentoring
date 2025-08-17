@@ -3,6 +3,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const path = require('path');
+
 const nodemailer = require('nodemailer'); // 이메일 발송을 위한 라이브러리 추가
 
 // 앱 초기화
@@ -168,19 +169,14 @@ app.post('/send-email/:id', async (req, res) => {
       return res.status(404).send('연락처를 찾을 수 없습니다.');
     }
 
-    // 이메일 발송 설정
-    const transporter = createTransporter();
 
-    // 이메일 옵션 설정
-    const mailOptions = {
+    const transporter = createTransporter();
+    await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: contact.email,
       subject: subject,
       text: message
-    };
-
-    // 이메일 발송
-    await transporter.sendMail(mailOptions);
+    });
 
     // 이메일 발송 기록 저장
     await db.collection('emails').insertOne({

@@ -1,0 +1,74 @@
+<h1 class="mb-4">동물 정보 수정</h1>
+
+<div class="card">
+  <div class="card-body">
+    <form action="/edit/<%= animal._id %>" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="name" class="form-label">동물 이름</label>
+        <input type="text" class="form-control" id="name" name="name" value="<%= animal.name %>" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="type" class="form-label">동물 종류</label>
+        <select class="form-select" id="type" name="type" required>
+          <option value="강아지" <%= animal.type === '강아지' ? 'selected' : '' %>>강아지</option>
+          <option value="고양이" <%= animal.type === '고양이' ? 'selected' : '' %>>고양이</option>
+          <option value="새" <%= animal.type === '새' ? 'selected' : '' %>>새</option>
+          <option value="물고기" <%= animal.type === '물고기' ? 'selected' : '' %>>물고기</option>
+          <option value="기타" <%= animal.type === '기타' ? 'selected' : '' %>>기타</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">설명</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required><%= animal.description %></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">현재 이미지</label>
+        <div>
+          <img src="<%= animal.imagePath %>" alt="<%= animal.name %>" style="max-width: 300px; max-height: 300px;" class="mb-3 border rounded">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">새 이미지 업로드 (선택사항)</label>
+        <input class="form-control" type="file" id="image" name="image" accept="image/*">
+        <div class="form-text">새 이미지를 업로드하지 않으면 기존 이미지가 유지됩니다.</div>
+      </div>
+
+      <div class="mb-3">
+        <div id="preview" class="mt-2 d-none">
+          <p>새 이미지 미리보기:</p>
+          <img id="imagePreview" src="#" alt="이미지 미리보기" style="max-width: 300px; max-height: 300px;">
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <a href="/detail/<%= animal._id %>" class="btn btn-secondary">취소</a>
+        <button type="submit" class="btn btn-primary">저장</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // 이미지 미리보기 기능
+  document.getElementById('image').addEventListener('change', function(e) {
+    const preview = document.getElementById('preview');
+    const imagePreview = document.getElementById('imagePreview');
+    
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        preview.classList.remove('d-none');
+      }
+      
+      reader.readAsDataURL(e.target.files[0]);
+    } else {
+      preview.classList.add('d-none');
+    }
+  });
+</script>

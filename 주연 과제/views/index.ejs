@@ -1,0 +1,33 @@
+<h1 class="mb-4">동물 사진첩
+  <% if (locals.currentType) { %>
+    - <%= currentType %> 보기
+  <% } %>
+</h1>
+
+<div class="row mb-4">
+  <div class="col">
+    <a href="/add" class="btn btn-primary">새 동물 추가</a>
+  </div>
+</div>
+
+<% if (!animals || animals.length === 0) { %>
+  <div class="alert alert-info">
+    등록된 동물 사진이 없습니다. 새 동물을 추가해보세요!
+  </div>
+<% } else { %>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% animals.forEach(animal => { %>
+      <div class="col">
+        <div class="card h-100">
+          <img src="<%= animal.imagePath %>" class="card-img-top animal-img" alt="<%= animal.name %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= animal.name %></h5>
+            <p class="card-text"><span class="badge bg-secondary"><%= animal.type %></span></p>
+            <p class="card-text"><%= animal.description.length > 100 ? animal.description.substring(0, 100) + '...' : animal.description %></p>
+            <a href="/detail/<%= animal._id %>" class="btn btn-primary">자세히 보기</a>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+<% } %>

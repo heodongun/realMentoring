@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-lg-8 mx-auto">
+    <h1 class="mb-4">영화 크롤링</h1>
+    
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="card-text">인터넷에서 영화 정보를 검색하여 사이트에 추가할 수 있습니다.</p>
+        
+        <form action="/crawl-movies" method="POST">
+          <div class="mb-3">
+            <label for="keyword" class="form-label">검색어</label>
+            <input type="text" class="form-control" id="keyword" name="keyword" placeholder="영화 제목 또는 관련 키워드" required>
+          </div>
+          
+          <div class="mb-4">
+            <label class="form-label">검색 소스</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="source" id="sourceNaver" value="naver" checked>
+              <label class="form-check-label" for="sourceNaver">
+                네이버 영화
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="source" id="sourceIMDB" value="imdb">
+              <label class="form-check-label" for="sourceIMDB">
+                IMDB
+              </label>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search me-2"></i>영화 검색
+          </button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="alert alert-info">
+      <h5><i class="fas fa-info-circle me-2"></i>안내</h5>
+      <p class="mb-0">크롤링된 영화 정보는 자동으로 수집되므로 일부 정보가 부정확하거나 누락될 수 있습니다. 추가 후 수정이 가능합니다.</p>
+    </div>
+  </div>
+</div>

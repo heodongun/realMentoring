@@ -1,0 +1,56 @@
+<div class="mb-4">
+  <a href="/" class="btn btn-outline-secondary">← 목록으로</a>
+</div>
+
+<div class="card mb-4">
+  <div class="row g-0">
+    <div class="col-md-6">
+      <img src="<%= animal.imagePath %>" class="img-fluid rounded-start" alt="<%= animal.name %>">
+    </div>
+    <div class="col-md-6">
+      <div class="card-body">
+        <h1 class="card-title"><%= animal.name %></h1>
+        <p class="card-text"><span class="badge bg-secondary"><%= animal.type %></span></p>
+        <p class="card-text"><%= animal.description %></p>
+        
+        <div class="mt-4">
+          <p class="card-text">
+            <small class="text-muted">
+              등록일: <%= new Date(animal.createdAt).toLocaleDateString('ko-KR') %>
+              <% if (animal.updatedAt) { %>
+                <br>최종 수정일: <%= new Date(animal.updatedAt).toLocaleDateString('ko-KR') %>
+              <% } %>
+            </small>
+          </p>
+        </div>
+        
+        <div class="mt-4 d-flex gap-2">
+          <a href="/edit/<%= animal._id %>" class="btn btn-primary">수정</a>
+          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 삭제 확인 모달 -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">동물 삭제 확인</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong><%= animal.name %></strong> 정보를 정말 삭제하시겠습니까?</p>
+        <p class="text-danger">이 작업은 되돌릴 수 없습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <form action="/delete/<%= animal._id %>" method="POST">
+          <button type="submit" class="btn btn-danger">삭제</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

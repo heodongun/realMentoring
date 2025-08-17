@@ -1,0 +1,144 @@
+/* 전체 스타일 */
+body {
+  background-color: #f8f9fa;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 카드 스타일 */
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* 동물 이미지 스타일 */
+.animal-img {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* 내비게이션 스타일 */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 버튼 효과 */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* 푸터 스타일 */
+footer {
+  background-color: #f1f1f1;
+  border-top: 1px solid #ddd;
+}
+
+/* 검색 페이지 스타일 */
+.search-page {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.search-form {
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.search-results {
+  margin-top: 30px;
+}
+
+.animal-card {
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.animal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.animal-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.crawled-image {
+  cursor: pointer;
+}
+
+.save-image-form {
+  margin-top: 10px;
+}
+
+.save-image-form .form-group {
+  margin-bottom: 10px;
+}
+
+/* 로딩 애니메이션 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #09f;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 검색 결과 애니메이션 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.search-results .col-md-4 {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.search-results .col-md-4:nth-child(3n+1) {
+  animation-delay: 0.1s;
+}
+
+.search-results .col-md-4:nth-child(3n+2) {
+  animation-delay: 0.2s;
+}
+
+.search-results .col-md-4:nth-child(3n+3) {
+  animation-delay: 0.3s;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .search-results .col-md-4 {
+    margin-bottom: 15px;
+  }
+  
+  .animal-card .card-img-top {
+    height: 150px;
+  }
+}

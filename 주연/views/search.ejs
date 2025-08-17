@@ -1,0 +1,127 @@
+<h1 class="mb-4">동물 이미지 검색</h1>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <form action="/search" method="GET" class="mb-4">
+      <div class="input-group">
+        <input type="text" name="query" class="form-control" placeholder="동물 이름을 입력하세요 (예: 골든 리트리버, 벵갈 고양이)" 
+          value="<%= locals.query || '' %>" required>
+        <button class="btn btn-primary" type="submit">검색</button>
+      </div>
+    </form>
+
+    <% if (locals.isSearching) { %>
+      <div class="d-flex justify-content-center my-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">검색 중...</span>
+        </div>
+        <p class="ms-3">검색 중입니다. 잠시만 기다려주세요...</p>
+      </div>
+    <% } %>
+
+    <% if (locals.error) { %>
+      <div class="alert alert-danger">
+        <p><%= error %></p>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<% if (locals.images && images.length > 0) { %>
+  <div class="mb-4">
+    <h2>"<%= query %>" 검색 결과</h2>
+    <p>발견된 이미지 <%= images.length %>개</p>
+    
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <form action="/save-searched-animal" method="POST" class="card p-3">
+          <h5>이 동물을 내 사진첩에 저장하기</h5>
+          
+          <div class="mb-3">
+            <label for="name" class="form-label">동물 이름</label>
+            <input type="text" class="form-control" id="name" name="name" value="<%= query %>" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="type" class="form-label">동물 종류</label>
+            <select class="form-select" id="type" name="type" required>
+              <option value="강아지">강아지</option>
+              <option value="고양이">고양이</option>
+              <option value="새">새</option>
+              <option value="물고기">물고기</option>
+              <option value="기타" selected>기타</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label for="description" class="form-label">설명</label>
+            <textarea class="form-control" id="description" name="description" rows="2" required>검색으로 발견한 <%= query %> 이미지입니다.</textarea>
+          </div>
+          
+          <div class="mb-3">
+            <label for="imageUrl" class="form-label">이미지 URL 선택</label>
+            <select class="form-select" id="imageUrl" name="imageUrl" required>
+              <% images.slice(0, 10).forEach((img, idx) => { %>
+                <option value="<%= img %>" data-index="<%= idx %>"><%= idx + 1 %>번 이미지</option>
+              <% }) %>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">선택된 이미지 미리보기</label>
+            <div class="border p-2 text-center">
+              <img id="previewImage" src="<%= images[0] %>" alt="<%= query %>" class="img-fluid" style="max-height: 200px;">
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-success">내 사진첩에 저장</button>
+        </form>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card p-3">
+          <h5>모든 검색 결과</h5>
+          <div class="image-gallery">
+            <% images.forEach((img, idx) => { %>
+              <div class="image-item mb-2">
+                <p class="small text-muted mb-1"><%= idx + 1 %>번 이미지</p>
+                <img src="<%= img %>" alt="<%= query %> 이미지 <%= idx + 1 %>" class="img-thumbnail" style="max-height: 150px;">
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% } else if (locals.query) { %>
+  <div class="alert alert-info">
+    "<%= query %>"에 대한 검색 결과가 없습니다. 다른 검색어로 시도해보세요.
+  </div>
+<% } %>
+
+<script>
+  // 선택한 이미지 미리보기
+  document.getElementById('imageUrl').addEventListener('change', function() {
+    const selectedUrl = this.value;
+    document.getElementById('previewImage').src = selectedUrl;
+  });
+  
+  // 기존 코드 제거: 폼 제출 시 로딩 표시 부분이 정상적인 GET 요청을 방해함
+  // 대신 로딩 표시를 서버 사이드에서 처리
+  const searchForm = document.querySelector('form[action="/search"]');
+  if (searchForm) {
+    searchForm.addEventListener('submit', function(event) {
+      // 폼이 정상적으로 제출되도록 함
+      const searchInput = this.querySelector('input[name="query"]');
+      if (searchInput && searchInput.value.trim()) {
+        // 입력값이 있는 경우에만 폼 제출
+        const loadingIndicator = document.createElement('div');
+        loadingIndicator.className = 'loading-indicator mt-3 text-center';
+        loadingIndicator.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">검색 중...</span></div><p class="mt-2">검색 중입니다. 잠시만 기다려주세요...</p>';
+
+        // 폼 제출 후 로딩 표시 추가
+        this.after(loadingIndicator);
+      }
+  });
+  }
+</script>

@@ -1,0 +1,54 @@
+<div class="row mb-4">
+  <div class="col">
+    <h1 class="display-5">최신 영화 리뷰</h1>
+    <p class="lead">다양한 영화를 살펴보고 리뷰를 남겨보세요.</p>
+  </div>
+</div>
+
+<% if (movies && movies.length > 0) { %>
+  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+    <% movies.forEach(movie => { %>
+      <div class="col">
+        <div class="card h-100 movie-card">
+          <div class="poster-container">
+            <% if (movie.posterPath) { %>
+              <img src="<%= movie.isExternalPoster ? movie.posterPath : movie.posterPath %>" class="card-img-top" alt="<%= movie.title %> 포스터">
+            <% } else { %>
+              <div class="bg-secondary d-flex justify-content-center align-items-center h-100">
+                <i class="fas fa-film fa-3x text-white"></i>
+              </div>
+            <% } %>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"><%= movie.title %></h5>
+            <p class="card-text">
+              <small>감독: <%= movie.director %></small><br>
+              <small>개봉: <%= movie.year %></small><br>
+              <small>장르: <%= movie.genre %></small>
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="rating-stars">
+                <% for(let i = 1; i <= 5; i++) { %>
+                  <% if (i <= Math.round(movie.rating)) { %>
+                    <i class="fas fa-star"></i>
+                  <% } else { %>
+                    <i class="far fa-star"></i>
+                  <% } %>
+                <% } %>
+                <span class="ms-1"><%= movie.rating %>/5</span>
+              </div>
+              <span class="badge bg-primary rounded-pill"><%= movie.reviewCount %> 리뷰</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a href="/movie/<%= movie._id %>" class="btn btn-primary w-100">상세보기</a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <div class="alert alert-info">
+    <p class="mb-0">등록된 영화가 없습니다. <a href="/add-movie" class="alert-link">영화 추가하기</a> 또는 <a href="/crawl-movies" class="alert-link">영화 크롤링하기</a></p>
+  </div>
+<% } %>

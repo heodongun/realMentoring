@@ -1,0 +1,342 @@
+/* 전체 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px 0;
+    color: #777;
+}
+
+/* 메인 페이지 스타일 */
+.welcome-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.game-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.option-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    transition: transform 0.3s;
+}
+
+.option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #0b7dda;
+}
+
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f;
+}
+
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.instructions {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    max-width: 600px;
+    text-align: left;
+}
+
+.instructions h3 {
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+.instructions ul {
+    list-style-position: inside;
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+}
+
+.status-message {
+    height: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    padding: 5px 0;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.status-message.info {
+    color: #2196F3;
+}
+
+.status-message.success {
+    color: #4CAF50;
+}
+
+.status-message.error {
+    color: #f44336;
+}
+
+/* 게임 페이지 스타일 */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.game-info-header {
+    text-align: center;
+}
+
+.game-info-header p {
+    color: #777;
+    margin-top: 5px;
+}
+
+.game-info {
+    display: flex;
+    gap: 20px;
+}
+
+.player-list {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+}
+
+.player-list h3 {
+    margin-bottom: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.player-list ul {
+    list-style: none;
+}
+
+.player-list li {
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.current-player {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    font-weight: bold;
+    border-left: 3px solid currentColor;
+}
+
+.player-name {
+    font-weight: bold;
+    flex: 1;
+}
+
+.player-score {
+    margin: 0 10px;
+}
+
+.player-status {
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.status-alive {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+}
+
+.status-dead {
+    background-color: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+}
+
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#gameCanvas {
+    background-color: #222;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.game-controls {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.game-message {
+    height: 30px;
+    font-weight: bold;
+    color: #4CAF50;
+    text-align: center;
+    margin: 10px 0;
+    padding: 5px 0;
+    transition: all 0.3s;
+}
+
+.game-instructions {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
+    max-width: 600px;
+}
+
+.game-instructions h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.game-instructions p {
+    margin: 5px 0;
+    color: #555;
+}
+
+@media (max-width: 800px) {
+    .game-header {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .canvas-container canvas {
+        width: 100%;
+        height: auto;
+    }
+    
+    .player-list {
+        width: 100%;
+    }
+}
